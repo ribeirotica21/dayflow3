@@ -8,7 +8,7 @@ import {
   IonItemOptions, IonItemOption
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addOutline, trashOutline } from 'ionicons/icons';
+import { addOutline, trashOutline, checkboxOutline } from 'ionicons/icons';
 import { TaskService, Task } from '../../services/task';
 
 @Component({
@@ -30,7 +30,7 @@ export class TodayPage implements OnInit {
   newTaskTitle: string = '';
 
   constructor(private taskService: TaskService) {
-    addIcons({ addOutline, trashOutline });
+    addIcons({ addOutline, trashOutline, checkboxOutline });
   }
 
   async ngOnInit() {
