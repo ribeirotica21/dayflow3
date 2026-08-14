@@ -1,13 +1,41 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>weather</ion-title>
+    <ion-title>Weather</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">weather</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="ion-text-center ion-padding" *ngIf="!temperature && !loading && !errorMessage">
+    <ion-icon name="location-outline" size="large"></ion-icon>
+    <p>Get the current weather at your location, and see if it's a good day for outdoor habits.</p>
+    <ion-button (click)="fetchWeather()">
+      Get Weather
+    </ion-button>
+  </div>
+
+  <div class="ion-text-center ion-padding" *ngIf="loading">
+    <ion-spinner></ion-spinner>
+    <p>Fetching your location and weather...</p>
+  </div>
+
+  <div class="ion-text-center ion-padding" *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+    <ion-button (click)="fetchWeather()">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Try Again
+    </ion-button>
+  </div>
+
+  <ion-card *ngIf="temperature !== null && !loading">
+    <ion-card-content class="ion-text-center">
+      <h1>{{ temperature }}°C</h1>
+      <p>{{ description }}</p>
+      <p *ngIf="outdoorFriendly">Good conditions for outdoor habits today.</p>
+      <p *ngIf="!outdoorFriendly">Might be better to keep habits indoors today.</p>
+      <ion-button (click)="fetchWeather()" fill="clear">
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Refresh
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
