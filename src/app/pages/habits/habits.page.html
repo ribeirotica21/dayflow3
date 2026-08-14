@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>habits</ion-title>
+    <ion-title>Habits</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">habits</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input
+      [(ngModel)]="newHabitTitle"
+      placeholder="Add a new habit..."
+      (keyup.enter)="addHabit()">
+    </ion-input>
+    <ion-button (click)="addHabit()" fill="clear" slot="end">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <p *ngIf="habits.length === 0" class="ion-text-center ion-padding">
+    No habits yet. Add one above to start building your streaks.
+  </p>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let habit of habits">
+      <ion-item>
+        <ion-icon name="flame-outline" slot="start" color="warning"></ion-icon>
+        <ion-label>
+          {{ habit.title }}
+        </ion-label>
+        <ion-badge slot="end" color="warning">{{ habit.streak }} day streak</ion-badge>
+        <ion-button (click)="completeToday(habit.id)" fill="clear" slot="end">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteHabit(habit.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
